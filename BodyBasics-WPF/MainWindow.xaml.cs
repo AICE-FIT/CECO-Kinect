@@ -16,6 +16,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using Microsoft.Kinect;
+    using System.Threading;
+    using System.Windows.Threading;
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -128,6 +130,16 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private string statusText = null;
 
         /// <summary>
+        /// Current right hand values to display
+        /// </summary>
+        private string rightHandValues = null;
+
+        /// <summary>
+        /// Current status right elbow values to display
+        /// </summary>
+        private string rightElbowValues = null;
+
+        /// <summary>
         /// Initializes a new instance of the MainWindow class.
         /// </summary>
         public MainWindow()
@@ -205,6 +217,14 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             this.StatusText = this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
                                                             : Properties.Resources.NoSensorStatusText;
 
+             
+             // Current right hand values to display
+             this.RightHandValues = "waiting";
+
+        
+            // Current status right elbow values to display
+            this.RightElbowValues = "waiting";
+
             // Create the drawing group we'll use for drawing
             this.drawingGroup = new DrawingGroup();
 
@@ -216,6 +236,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
             // initialize the components (controls) of the window
             this.InitializeComponent();
+
         }
 
         /// <summary>
@@ -258,6 +279,51 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 }
             }
         }
+
+        public string RightHandValues
+        {
+            get
+            {
+                return this.rightHandValues;
+            }
+
+            set
+            {
+                if (this.rightHandValues != value)
+                {
+                    this.rightHandValues = value;
+
+                    // notify any bound elements that the text has changed
+                    if (this.PropertyChanged != null)
+                    {
+                        this.PropertyChanged(this, new PropertyChangedEventArgs("RightHandValues"));
+                    }
+                }
+            }
+        }
+
+        public string RightElbowValues
+        {
+            get
+            {
+                return this.rightElbowValues;
+            }
+
+            set
+            {
+                if (this.rightElbowValues != value)
+                {
+                    this.rightElbowValues = value;
+
+                    // notify any bound elements that the text has changed
+                    if (this.PropertyChanged != null)
+                    {
+                        this.PropertyChanged(this, new PropertyChangedEventArgs("RightElbowValues"));
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// Execute start up tasks
@@ -352,10 +418,12 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
                                 DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(position);
                                 jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
+
                             }
 
                             this.DrawBody(joints, jointPoints, dc, drawPen);
-
+                            this.RightHandValues = "Right Hand: " + "X: " + jointPoints[JointType.HandRight].X + " " + "Y: " + jointPoints[JointType.HandRight].Y;
+                            this.RightElbowValues = "Right Elbow: " + "X: " + jointPoints[JointType.ElbowRight].X + " " + "Y: " + jointPoints[JointType.ElbowRight].Y;
                             this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
                             this.DrawHand(body.HandRightState, jointPoints[JointType.HandRight], dc);
                         }
