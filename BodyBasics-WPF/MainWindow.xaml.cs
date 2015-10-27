@@ -14,6 +14,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     using System.IO;
     using System.Windows;
     using System.Windows.Media;
+    using System.Windows.Media.Media3D;
     using System.Windows.Media.Imaging;
     using Microsoft.Kinect;
     using System.Threading;
@@ -140,6 +141,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private string rightElbowValues = null;
 
         /// <summary>
+        /// Current status right elbow angles to display
+        /// </summary>
+        private string rightElbowAngles = null;
+
+        /// <summary>
         /// Initializes a new instance of the MainWindow class.
         /// </summary>
         public MainWindow()
@@ -224,6 +230,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         
             // Current status right elbow values to display
             this.RightElbowValues = "waiting";
+
+            //Current status right elbow angles to display
+            this.RightElbowAngles = "waiting";
 
             // Create the drawing group we'll use for drawing
             this.drawingGroup = new DrawingGroup();
@@ -319,6 +328,28 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     if (this.PropertyChanged != null)
                     {
                         this.PropertyChanged(this, new PropertyChangedEventArgs("RightElbowValues"));
+                    }
+                }
+            }
+        }
+
+        public string RightElbowAngles
+        {
+            get
+            {
+                return this.rightElbowAngles;
+            }
+
+            set
+            {
+                if (this.rightElbowAngles != value)
+                {
+                    this.rightElbowAngles = value;
+
+                    // notify any bound elements that the text has changed
+                    if (this.PropertyChanged != null)
+                    {
+                        this.PropertyChanged(this, new PropertyChangedEventArgs("RightElbowAngles"));
                     }
                 }
             }
@@ -424,7 +455,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                             this.DrawBody(joints, jointPoints, dc, drawPen);
                             this.RightHandValues = "Right Hand: " + "X: " + jointPoints[JointType.HandRight].X + " " + "Y: " + jointPoints[JointType.HandRight].Y;
                             this.RightElbowValues = "Right Elbow: " + "X: " + jointPoints[JointType.ElbowRight].X + " " + "Y: " + jointPoints[JointType.ElbowRight].Y;
-                            this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
+                            this.RightElbowAngles = "Right Elbow Angle: " + AngleBetweenVectors(joints[JointType.ElbowRight], joints[JointType.ShoulderRight], joints[JointType.WristRight]);
                             this.DrawHand(body.HandRightState, jointPoints[JointType.HandRight], dc);
                         }
                     }
@@ -433,6 +464,29 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     this.drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
                 }
             }
+        }
+
+        private double AngleBetweenVectors(Joint elbowRight, Joint shoulderRight, Joint wristRight)
+        {
+            Double angle;
+            Vector3D elbowR = new Vector3D(elbowRight.Position.X, elbowRight.Position.Y, elbowRight.Position.Z);
+            Vector3D shoulderR = new Vector3D(shoulderRight.Position.X, shoulderRight.Position.Y, shoulderRight.Position.Z);
+            Vector3D wristR = new Vector3D(wristRight.Position.X, wristRight.Position.Y, wristRight.Position.Z);
+
+            angle = calculateAngles(elbowR - shoulderR, elbowR - wristR);
+
+            return angle; 
+        }
+
+        private double calculateAngles(Vector3D a, Vector3D b)
+        {
+            
+            double dproduct = 0.0;
+            a.Normalize();
+            b.Normalize();
+
+            dproduct = Vector3D.DotProduct(a,b);
+            return (double)Math.Acos(dproduct) / Math.PI * 180; 
         }
 
         /// <summary>
