@@ -13,3 +13,20 @@ C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\Samples\Managed\BodyBasics-WPF\
 C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\Samples\Managed\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.csproj.GenerateResource.Cache
 C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\Samples\Managed\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.exe
 C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\Samples\Managed\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.pdb
+A:\AICE-FIT\Git\BodyBasics-WPF\bin\AnyCPU\Debug\BodyBasics-WPF.exe.config
+A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.exe
+A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.pdb
+A:\AICE-FIT\Git\BodyBasics-WPF\bin\AnyCPU\Debug\BodyBasics-WPF.exe
+A:\AICE-FIT\Git\BodyBasics-WPF\bin\AnyCPU\Debug\BodyBasics-WPF.pdb
+A:\AICE-FIT\Git\BodyBasics-WPF\bin\AnyCPU\Debug\Microsoft.Kinect.xml
+A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.csprojResolveAssemblyReference.cache
+A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\MainWindow.baml
+A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\MainWindow.g.cs
+A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\App.g.cs
+A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\BodyBasics-WPF_MarkupCompile.cache
+A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.g.resources
+A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\Microsoft.Samples.Kinect.BodyBasics.Properties.Resources.resources
+A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.csproj.GenerateResource.Cache
+A:\AICE-FIT\Git\BodyBasics-WPF\bin\AnyCPU\Debug\Microsoft.Kinect.dll
+A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\WelcomeWindow.baml
+A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\WelcomeWindow.g.cs
