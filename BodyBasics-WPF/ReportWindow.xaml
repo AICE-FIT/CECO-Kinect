@@ -1,0 +1,68 @@
+﻿<Window x:Class="Microsoft.Samples.Kinect.BodyBasics.ReportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Microsoft.Samples.Kinect.BodyBasics"
+        mc:Ignorable="d"
+        Title="Report Window" Height="405.042" Width="630.251">
+    <Window.Resources>
+        <!--resources here-->
+        <DataTemplate x:Key="exerciseListTemplate">
+            <StackPanel>
+                <TextBlock Text="{Binding Path=ExerciseName}" FontWeight="Bold" FontFamily="Consolas" FontSize="14.667" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Measurement A: "/>
+                    <TextBlock Text="{Binding Path=MeasurementA}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Measurement B: "/>
+                    <TextBlock Text="{Binding Path=MeasurementB}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Measurement C: "/>
+                    <TextBlock Text="{Binding Path=MeasurementC}" />
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+        <Style  TargetType="{x:Type ListBoxItem}">
+            <Style.Triggers>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                    <Setter Property="Background" Value="#FF98FB98"></Setter>
+                </Trigger>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                    <Setter Property="Background" Value="#FFADD8E6"/>
+                </Trigger>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="2">
+                    <Setter Property="Background" Value="#FFFA8072"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Viewbox>
+        <Grid Margin="10,10,10,12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="23*"/>
+                <RowDefinition Height="67*"/>
+            </Grid.RowDefinitions>
+
+            <ListBox x:Name="exerciseListBox" AlternationCount="3" HorizontalAlignment="Stretch" Height="203" Margin="10,18,0,0" VerticalAlignment="Top" Width="539"
+                 ItemTemplate="{StaticResource exerciseListTemplate}" Grid.Row="1"/>
+            <Label x:Name="patientNameLabel" Content="Patient Name:" HorizontalAlignment="Left" Margin="173,58,0,0" VerticalAlignment="Top" Width="89" Grid.Row="0"/>
+            <Label x:Name="patientIDLabel" Content="Patient ID: " HorizontalAlignment="Left" Margin="173,25,0,0" VerticalAlignment="Top" Width="64" Grid.Row="0"/>
+            <Label x:Name="patientIDTextBox" Content="{Binding PatientID}" HorizontalAlignment="Left" Margin="242,25,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="patientNameTextBox"  HorizontalAlignment="Left"  Margin="257,58,0,0" VerticalAlignment="Top" Grid.Row="0">
+                <Label.Content>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} {1}">
+                                <Binding Path="FirstName" />
+                                <Binding Path="LastName" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </Label.Content>
+            </Label>
+        </Grid>
+    </Viewbox>
+</Window>

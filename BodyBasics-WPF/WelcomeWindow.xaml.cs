@@ -22,6 +22,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         public Window1()
         {
             InitializeComponent();
+          
         }
 
         public void GoToExercises(object sender, RoutedEventArgs e)
@@ -33,6 +34,12 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         public void ToDoAlert(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("We haven't implemented this feature yet!");
+        }
+
+        public void GoToReport(object sender, RoutedEventArgs e)
+        {
+            MainReportWriter mrw = new MainReportWriter();
+            mrw.Show();
         }
     }
 }

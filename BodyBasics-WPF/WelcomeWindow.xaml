@@ -1,19 +1,21 @@
 ﻿<Window x:Class="Microsoft.Samples.Kinect.BodyBasics.Window1"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Window1" Height="330" Width="800">
-    <Grid>
-        <Button HorizontalAlignment="Left" Height="120" Margin="30,30,0,0" VerticalAlignment="Top" Width="120" Click="GoToExercises">
-            <Image Source="Images/exercise.png"></Image>
-        </Button>
-        <Button HorizontalAlignment="Left" Height="120" Margin="160,30,0,0" VerticalAlignment="Top" Width="120" Click="ToDoAlert">
-            <Image Source="Images/progress.png"></Image>
-        </Button>
-        <Button HorizontalAlignment="Left" Height="120" Margin="30,160,0,0" VerticalAlignment="Top" Width="120" Click="ToDoAlert">
-            <Image Source="Images/todo.png"></Image>
-        </Button>
-        <Button HorizontalAlignment="Left" Height="120" Margin="160,160,0,0" VerticalAlignment="Top" Width="120" Click="ToDoAlert">
-            <Image Source="Images/report.png"></Image>
-        </Button>
-    </Grid>
+        Title="Welcome Window" Height="330" Width="800">
+    <Viewbox>
+        <Grid Height="291" Width="291">
+            <Button HorizontalAlignment="Left" Height="120" Margin="30,30,0,0" VerticalAlignment="Top" Width="120" Click="GoToExercises">
+                <Image Source="Images/exercise.png"></Image>
+            </Button>
+            <Button HorizontalAlignment="Left" Height="120" Margin="160,30,0,0" VerticalAlignment="Top" Width="120" Click="ToDoAlert">
+                <Image Source="Images/progress.png"></Image>
+            </Button>
+            <Button HorizontalAlignment="Left" Height="120" Margin="30,160,0,0" VerticalAlignment="Top" Width="120" Click="ToDoAlert">
+                <Image Source="Images/todo.png"></Image>
+            </Button>
+            <Button HorizontalAlignment="Left" Height="120" Margin="160,160,0,0" VerticalAlignment="Top" Width="120" Click="GoToReport">
+                <Image Source="Images/report.png"></Image>
+            </Button>
+        </Grid>
+    </Viewbox>
 </Window>

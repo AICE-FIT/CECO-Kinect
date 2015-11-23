@@ -1,0 +1,19 @@
+﻿<Window x:Class="Microsoft.Samples.Kinect.BodyBasics.MainReportWriter"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Microsoft.Samples.Kinect.BodyBasics"
+        mc:Ignorable="d"
+        Title="Report Writer" Height="300" Width="300">
+    <Viewbox>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label x:Name="title" Content="Report Creator" Grid.Row="0"  HorizontalAlignment="Stretch" Margin="0,36,0,185" VerticalAlignment="Stretch" FontSize="30"/>
+            <TextBox x:Name="patientID" HorizontalAlignment="Stretch" Grid.Row="0" Height="23" Margin="39,122,30,126" TextWrapping="Wrap" Text="Enter Patient ID" VerticalAlignment="Stretch" Width="120"/>
+            <Button x:Name="gnerateReport" Style="{StaticResource btn-success}" Grid.Row="0" Content="Generate Report" HorizontalAlignment="Stretch" Margin="39,190,30,50" VerticalAlignment="Stretch" Width="120" FontSize="10.667" Height="31" Click="gnerateReport_Click"/>
+        </Grid>
+   </Viewbox>
+</Window>
