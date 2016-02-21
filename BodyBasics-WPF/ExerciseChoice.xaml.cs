@@ -35,11 +35,13 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             MessageBox.Show("We haven't implemented this feature yet!");
         }
 
+        /*    // This will 
         public void GoToStanding(object sender, RoutedEventArgs e)
         {
             StandingExercise se = new StandingExercise();
             se.Show();
         }
+        */
 
         public void GoToTest(object sender, RoutedEventArgs e)
         {
