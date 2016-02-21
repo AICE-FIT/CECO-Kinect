@@ -23,5 +23,28 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         {
             InitializeComponent();
         }
+
+        public void GoToReach(object sender, RoutedEventArgs e)
+        {
+            ReachExercise re = new ReachExercise();
+            re.Show();
+        }
+
+        public void ToDoAlert(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("We haven't implemented this feature yet!");
+        }
+
+        public void GoToStanding(object sender, RoutedEventArgs e)
+        {
+            StandingExercise se = new StandingExercise();
+            se.Show();
+        }
+
+        public void GoToTest(object sender, RoutedEventArgs e)
+        {
+            MainWindow test = new MainWindow();
+            test.Show();
+        }
     }
 }

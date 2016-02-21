@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="Window2" Height="300" Width="566.834">
     <Grid Margin="0,0,11,0">
-        <Button x:Name="button" Content="Reaching Exercise" HorizontalAlignment="Left" VerticalAlignment="Top" Width="375" Margin="86,72,0,0"/>
-        <Button x:Name="button1" Content="Standing Exercise" HorizontalAlignment="Left" VerticalAlignment="Top" Width="375" Margin="86,136,0,0" RenderTransformOrigin="0.502,1.033"/>
-        <Button x:Name="button2" Content="Free Test" HorizontalAlignment="Left" VerticalAlignment="Top" Width="375" RenderTransformOrigin="3.193,8.939" Margin="86,199,0,0"/>
+        <Button x:Name="button" Content="Reaching Exercise" HorizontalAlignment="Left" VerticalAlignment="Top" Width="375" Margin="86,72,0,0" Click="GoToReach"/>
+        <Button x:Name="button1" Content="Standing Exercise" HorizontalAlignment="Left" VerticalAlignment="Top" Width="375" Margin="86,136,0,0" RenderTransformOrigin="0.502,1.033" Click="ToDoAlert"/>
+        <Button x:Name="button2" Content="Free Test" HorizontalAlignment="Left" VerticalAlignment="Top" Width="375" RenderTransformOrigin="3.193,8.939" Margin="86,199,0,0"Click="GoToTest"/>
 
     </Grid>
 </Window>
