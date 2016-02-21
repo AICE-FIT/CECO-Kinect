@@ -30,3 +30,28 @@ A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.csproj.GenerateResource.
 A:\AICE-FIT\Git\BodyBasics-WPF\bin\AnyCPU\Debug\Microsoft.Kinect.dll
 A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\WelcomeWindow.baml
 A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\WelcomeWindow.g.cs
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\bin\AnyCPU\Debug\BodyBasics-WPF.exe.config
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.exe
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.pdb
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\bin\AnyCPU\Debug\BodyBasics-WPF.exe
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\bin\AnyCPU\Debug\BodyBasics-WPF.pdb
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\bin\AnyCPU\Debug\BodyBasics-WPF.exe.CodeAnalysisLog.xml
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\bin\AnyCPU\Debug\BodyBasics-WPF.exe.lastcodeanalysissucceeded
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\bin\AnyCPU\Debug\MySql.Data.dll
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.csprojResolveAssemblyReference.cache
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\MainWindow.baml
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\WelcomeWindow.baml
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\App.baml
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\MainReportWriter.g.cs
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\MainWindow.g.cs
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\ReportWindow.g.cs
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\WelcomeWindow.g.cs
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\App.g.cs
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\BodyBasics-WPF_Content.g.cs
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\BodyBasics-WPF_MarkupCompile.cache
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\BodyBasics-WPF_MarkupCompile.lref
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\MainReportWriter.baml
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\ReportWindow.baml
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.g.resources
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\Microsoft.Samples.Kinect.BodyBasics.Properties.Resources.resources
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.csproj.GenerateResource.Cache

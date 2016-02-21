@@ -27,8 +27,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
         public void GoToExercises(object sender, RoutedEventArgs e)
         {
-            MainWindow mw = new MainWindow();
-            mw.Show();
+            ExerciseChoice ec = new ExerciseChoice();
+            ec.Show();
         }
 
         public void ToDoAlert(object sender, RoutedEventArgs e)

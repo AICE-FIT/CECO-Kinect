@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-A:\AICE-FIT\Git\BodyBasics-WPF\obj\Debug\
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\
 Microsoft.Samples.Kinect.BodyBasics
 none
 false
-DEBUG;TRACE
-A:\AICE-FIT\Git\BodyBasics-WPF\App.xaml
-2847190762
-
-6727639813
-13-830665276
-MainWindow.xaml;WelcomeWindow.xaml;
+CODE_ANALYSIS;DEBUG;TRACE
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\App.xaml
+4-2049434532
+1-476160229
+12-1972915166
+15-1352339500
+MainReportWriter.xaml;MainWindow.xaml;ReportWindow.xaml;WelcomeWindow.xaml;
 
 False
 
