@@ -128,6 +128,19 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// </summary>
         private string statusText = null;
 
+        //NEW CODE
+        ///<summary>
+        /// Index for Users
+        /// Body for Users
+        /// Tracking id given by kinect once user is being tracked
+        /// </summary>
+        private int userIndex1 = 0;
+        private int userIndex2 = 1;
+        private Body userBody1 = null;
+        private Body userBody2 = null;
+        private string userKinectTrackingID1;
+        private string userKinectTrackingID2;
+
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
         /// </summary>
@@ -206,6 +219,12 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             this.StatusText = this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
                                                             : Properties.Resources.NoSensorStatusText;
 
+            //NEW CODE
+            //Tracking kinect set ids
+            UserKinectTrackingID1 = "not tracking";
+            UserKinectTrackingID2 = "not tracking";
+
+      
             // Create the drawing group we'll use for drawing
             this.drawingGroup = new DrawingGroup();
 
@@ -255,6 +274,57 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     if (this.PropertyChanged != null)
                     {
                         this.PropertyChanged(this, new PropertyChangedEventArgs("StatusText"));
+                    }
+                }
+            }
+        }
+
+         //NEW CODE
+        /// <summary>
+        /// Gets or sets the current user kinect tracking id to display for user 1
+        /// </summary>
+        public string UserKinectTrackingID1
+        {
+            get
+            {
+                return this.userKinectTrackingID1;
+            }
+
+            set
+            {
+                if (this.userKinectTrackingID1 != value)
+                {
+                    this.userKinectTrackingID1 = value;
+
+                    // notify any bound elements that the text has changed
+                    if (this.PropertyChanged != null)
+                    {
+                        this.PropertyChanged(this, new PropertyChangedEventArgs("UserKinectTrackingID1"));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the current user kinect tracking id to display for user 1
+        /// </summary>
+        public string UserKinectTrackingID2
+        {
+            get
+            {
+                return this.userKinectTrackingID2;
+            }
+
+            set
+            {
+                if (this.userKinectTrackingID2 != value)
+                {
+                    this.userKinectTrackingID2 = value;
+
+                    // notify any bound elements that the text has changed
+                    if (this.PropertyChanged != null)
+                    {
+                        this.PropertyChanged(this, new PropertyChangedEventArgs("UserKinectTrackingID2"));
                     }
                 }
             }
@@ -312,6 +382,13 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         this.bodies = new Body[bodyFrame.BodyCount];
                     }
 
+               
+                    //NEW CODE
+                    userBody1 = this.bodies[userIndex1];
+                    userBody2 = this.bodies[userIndex2];
+                    UserKinectTrackingID1 = "User One Tracking ID: " + userBody1.TrackingId;
+                    UserKinectTrackingID2 = "User Two Tracking ID: " + userBody2.TrackingId;
+
                     // The first time GetAndRefreshBodyData is called, Kinect will allocate each Body in the array.
                     // As long as those body objects are not disposed and not set to null in the array,
                     // those body objects will be re-used.
@@ -334,6 +411,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
                         if (body.IsTracked)
                         {
+                            
                             this.DrawClippedEdges(body, dc);
 
                             IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
