@@ -456,6 +456,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                             this.RightHandValues = "Right Hand: " + "X: " + jointPoints[JointType.HandRight].X + " " + "Y: " + jointPoints[JointType.HandRight].Y;
                             this.RightElbowValues = "Right Elbow: " + "X: " + jointPoints[JointType.ElbowRight].X + " " + "Y: " + jointPoints[JointType.ElbowRight].Y;
                             this.RightElbowAngles = "Right Elbow Angle: " + AngleBetweenVectors(joints[JointType.ElbowRight], joints[JointType.ShoulderRight], joints[JointType.WristRight]);
+                            this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
                             this.DrawHand(body.HandRightState, jointPoints[JointType.HandRight], dc);
                         }
                     }

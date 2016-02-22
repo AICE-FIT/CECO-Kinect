@@ -26,6 +26,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
         public void GoToReach(object sender, RoutedEventArgs e)
         {
+            
             ReachExercise re = new ReachExercise();
             re.Show();
         }

@@ -4,7 +4,6 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
-
 namespace Microsoft.Samples.Kinect.BodyBasics
 {
     using System;
@@ -19,7 +18,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     using Microsoft.Kinect;
 
     /// <summary>
-    /// Interaction logic for ReachExercise.xaml
+    /// Interaction logic for MainWindow
     /// </summary>
     public partial class ReachExercise : Window, INotifyPropertyChanged
     {
@@ -130,12 +129,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
         //NEW CODE
         ///<summary>
-        /// Index for Users
         /// Body for Users
         /// Tracking id given by kinect once user is being tracked
         /// </summary>
-        private int userIndex1 = 0;
-        private int userIndex2 = 1;
         private Body userBody1 = null;
         private Body userBody2 = null;
         private string userKinectTrackingID1;
@@ -219,12 +215,10 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             this.StatusText = this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
                                                             : Properties.Resources.NoSensorStatusText;
 
-            //NEW CODE
             //Tracking kinect set ids
-            UserKinectTrackingID1 = "not tracking";
-            UserKinectTrackingID2 = "not tracking";
+            UserKinectTrackingID1 = "User 1: not tracking";
+            UserKinectTrackingID2 = "User 2: not tracking";
 
-      
             // Create the drawing group we'll use for drawing
             this.drawingGroup = new DrawingGroup();
 
@@ -279,7 +273,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
-         //NEW CODE
+        //NEW CODE
         /// <summary>
         /// Gets or sets the current user kinect tracking id to display for user 1
         /// </summary>
@@ -330,12 +324,13 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
+
         /// <summary>
         /// Execute start up tasks
         /// </summary>
         /// <param name="sender">object sending the event</param>
         /// <param name="e">event arguments</param>
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void ReachExercise_Loaded(object sender, RoutedEventArgs e)
         {
             if (this.bodyFrameReader != null)
             {
@@ -348,7 +343,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// </summary>
         /// <param name="sender">object sending the event</param>
         /// <param name="e">event arguments</param>
-        private void MainWindow_Closing(object sender, CancelEventArgs e)
+        private void ReachExercise_Closing(object sender, CancelEventArgs e)
         {
             if (this.bodyFrameReader != null)
             {
@@ -382,13 +377,6 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         this.bodies = new Body[bodyFrame.BodyCount];
                     }
 
-               
-                    //NEW CODE
-                    userBody1 = this.bodies[userIndex1];
-                    userBody2 = this.bodies[userIndex2];
-                    UserKinectTrackingID1 = "User One Tracking ID: " + userBody1.TrackingId;
-                    UserKinectTrackingID2 = "User Two Tracking ID: " + userBody2.TrackingId;
-
                     // The first time GetAndRefreshBodyData is called, Kinect will allocate each Body in the array.
                     // As long as those body objects are not disposed and not set to null in the array,
                     // those body objects will be re-used.
@@ -406,12 +394,44 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
                     int penIndex = 0;
                     foreach (Body body in this.bodies)
-                    {
+                    {                    
                         Pen drawPen = this.bodyColors[penIndex++];
+
+                        //updates skeleton tracking if anyone leaves
+                        if (userBody1 != null)
+                        {
+                            if (!userBody1.IsTracked)
+                            {
+                                userBody1 = null;
+                                UserKinectTrackingID1 = "User 1: not tracking";
+                            }
+                        }
+
+                        if (userBody2 != null)
+                        {
+                            if (!userBody2.IsTracked)
+                            {
+                                userBody2 = null;
+                                UserKinectTrackingID2 = "User 2: not tracking";
+                            }
+                        }
 
                         if (body.IsTracked)
                         {
                             
+                            //Instantiates the users with their respective skeletons and tracking
+                            if (userBody1 == null && body != userBody2)
+                            {
+                                userBody1 = body;
+                                UserKinectTrackingID1 = "User One Tracking ID: " + userBody1.TrackingId;
+
+                            }
+                            else if (userBody2 == null && body != userBody1)
+                            {
+                                userBody2 = body;
+                                UserKinectTrackingID2 = "User Two Tracking ID: " + userBody2.TrackingId;
+                            }
+
                             this.DrawClippedEdges(body, dc);
 
                             IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
