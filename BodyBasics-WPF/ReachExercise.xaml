@@ -30,5 +30,8 @@
         </StatusBar>
         <Label x:Name="User1_KinectID"  Content="{Binding UserKinectTrackingID1}" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.441,3.115" Grid.Row="1" Background="{x:Null}" Foreground="#FFCF55D4"/>
         <Label x:Name="User2_KinectID" Content="{Binding UserKinectTrackingID2}" HorizontalAlignment="Right" Margin="0,20,-1,0" RenderTransformOrigin="-0.441,3.115" Grid.Row="1" Background="{x:Null}" Foreground="#FFCF55D4" VerticalAlignment="Top"/>
+        <Viewbox  Margin="280,20,280,0" Stretch="None" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="89">
+            <Button x:Name="Start_Reach" Style="{StaticResource btn-info}" Content="Start Exercise" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" Click="startReachExercise" />
+        </Viewbox>
     </Grid>
 </Window>

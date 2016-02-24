@@ -13,9 +13,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     using System.Globalization;
     using System.IO;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using Microsoft.Kinect;
+ 
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -137,8 +139,18 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private string userKinectTrackingID1;
         private string userKinectTrackingID2;
 
+        ///<summary>
+        /// event status
+        /// </summary>
+        private bool isEventStarted = false;
+
+        ///<summary>
+        /// radius of circle used for reach detection
+        /// </summary>
+        private const double cirRadius = 45;
+
         /// <summary>
-        /// Initializes a new instance of the MainWindow class.
+        /// Initializes a new instance of the ReachWindow class.
         /// </summary>
         public ReachExercise()
         {
@@ -273,7 +285,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
-        //NEW CODE
+       
         /// <summary>
         /// Gets or sets the current user kinect tracking id to display for user 1
         /// </summary>
@@ -300,7 +312,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         }
 
         /// <summary>
-        /// Gets or sets the current user kinect tracking id to display for user 1
+        /// Gets or sets the current user kinect tracking id to display for user 2
         /// </summary>
         public string UserKinectTrackingID2
         {
@@ -322,6 +334,66 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Starts Reach Exercise
+        /// </summary>
+        private void startReachExercise(object sender, RoutedEventArgs e)
+        {
+
+            Button button = (Button)e.OriginalSource;
+
+            if (userBody1 != null && userBody2 != null)
+            {
+                button.IsEnabled = false;
+                button.Visibility = System.Windows.Visibility.Collapsed;
+          
+                isEventStarted = true;
+            }else if (userBody1 == null || userBody2 == null)
+            {
+                MessageBox.Show("User(s) not being tracked");
+            }
+        
+
+        }
+
+        /// <summary>
+        /// Logic for the exercise. Check if user1 has reached user2
+        /// </summary>
+        private void determineUserReach()
+        {
+
+            CameraSpacePoint handPositionUser1 = userBody1.Joints[JointType.HandLeft].Position;
+            CameraSpacePoint handPositionUser2 = userBody2.Joints[JointType.HandLeft].Position;
+            
+
+            if (handPositionUser1.Z < 0)
+            {
+                handPositionUser1.Z = InferredZPositionClamp;
+            }
+
+            if (handPositionUser2.Z < 0)
+            {
+                handPositionUser2.Z = InferredZPositionClamp;
+            }
+
+            DepthSpacePoint depth1 = this.coordinateMapper.MapCameraPointToDepthSpace(handPositionUser1);
+            DepthSpacePoint depth2 = this.coordinateMapper.MapCameraPointToDepthSpace(handPositionUser2);
+
+            Point handUser1 = new Point(depth1.X, depth1.Y);
+            Point handUser2 = new Point(depth2.X, depth2.Y);
+
+            /*
+               Equation for points x,y that fall within a circle: (x - center_x)^2 + (y - center_y)^2 < radius^2.
+               Here, points x,y are set to user1 (the patient). The centers are taken from the hand of user2 (conductor)
+               The radius is predefined via a constant
+            */
+            if ( ( Math.Pow( (handUser1.X - handUser2.X), 2) + Math.Pow( (handUser1.Y - handUser2.Y), 2) ) < Math.Pow(cirRadius,2) )
+            {
+                MessageBox.Show("Patient Reached Hand");
+            }
+
         }
 
 
@@ -398,6 +470,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         Pen drawPen = this.bodyColors[penIndex++];
 
                         //updates skeleton tracking if anyone leaves
+                        //TODO could move this out of foreach loop, probably still works
                         if (userBody1 != null)
                         {
                             if (!userBody1.IsTracked)
@@ -419,7 +492,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         if (body.IsTracked)
                         {
                             
-                            //Instantiates the users with their respective skeletons and tracking
+                            //Instantiates the users with their respective skeletons, when they are being tracked
                             if (userBody1 == null && body != userBody2)
                             {
                                 userBody1 = body;
@@ -457,6 +530,13 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
                             this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
                             this.DrawHand(body.HandRightState, jointPoints[JointType.HandRight], dc);
+
+                            //TODO could move this out of foreach loop, probably still works
+                            if (isEventStarted)
+                            {
+                                determineUserReach();
+                            }
+                            
                         }
                     }
 

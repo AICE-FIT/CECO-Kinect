@@ -6,10 +6,11 @@
         xmlns:local="clr-namespace:Microsoft.Samples.Kinect.BodyBasics"
         mc:Ignorable="d"
         Title="Exercise Choice" Height="300" Width="566.834">
-    <Grid Margin="0,0,11,0">
-        <Button x:Name="Reaching" Style="{StaticResource btn-primary}" Content="Reaching Exercise" HorizontalAlignment="Left" VerticalAlignment="Top" Width="375" Margin="86,72,0,0" Click="GoToReach"/>
-        <Button x:Name="Standing" Style="{StaticResource btn-primary}" Content="Standing Exercise" HorizontalAlignment="Left" VerticalAlignment="Top" Width="375" Margin="86,136,0,0" RenderTransformOrigin="0.502,1.033" Click="ToDoAlert"/>
-        <Button x:Name="Free" Style="{StaticResource btn-primary}" Content="Free Test" HorizontalAlignment="Left" VerticalAlignment="Top" Width="375" RenderTransformOrigin="3.193,8.939" Margin="86,199,0,0" Click="GoToTest"/>
-
-    </Grid>
+    <Viewbox>
+        <Grid Margin="0,0,11,0" Width="388" Height="195">
+            <Button x:Name="Reaching" Style="{StaticResource btn-primary}" Content="Reaching Exercise" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="43,29,0,0" Click="GoToReach" Width="332"/>
+            <Button x:Name="Standing" Style="{StaticResource btn-primary}" Content="Standing Exercise" HorizontalAlignment="Left" VerticalAlignment="Top" Width="332" Margin="43,83,0,0" RenderTransformOrigin="0.502,1.033" Click="ToDoAlert"/>
+            <Button x:Name="Free" Style="{StaticResource btn-primary}" Content="Free Test" HorizontalAlignment="Left" Width="331" RenderTransformOrigin="3.193,8.939" Margin="43,136,0,25" Click="GoToTest"/>
+        </Grid>
+    </Viewbox>
 </Window>

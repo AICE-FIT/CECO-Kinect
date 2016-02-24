@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="WelcomeWindow.xaml">
     <Application.Resources>
+
         <!--From http://kasey-jo.blogspot.com/2014/07/bootstrap-style-wpf-buttons.html-->
         <Style x:Key="btn" TargetType="Button">
             <Setter Property="FontFamily" Value="Helvetica Neue,Helvetica,Arial,sans-serif"/>
