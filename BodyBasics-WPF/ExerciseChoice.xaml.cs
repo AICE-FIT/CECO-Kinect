@@ -36,7 +36,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             MessageBox.Show("We haven't implemented this feature yet!");
         }
 
-        /*    // This will 
+        /*    // This will eventually go to the correct file for the standing test.
+               // I faked one for a BME presentation 
         public void GoToStanding(object sender, RoutedEventArgs e)
         {
             StandingExercise se = new StandingExercise();

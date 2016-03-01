@@ -76,11 +76,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ExerciseChoice.xaml.cs">
+      <DependentUpon>ExerciseChoice.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExerciseData.cs" />
     <Compile Include="MainReportWriter.xaml.cs">
       <DependentUpon>MainReportWriter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StandExercise.xaml.cs">
+      <DependentUpon>StandExercise.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PatientData.cs" />
+    <Compile Include="ReachExercise.xaml.cs">
+      <DependentUpon>ReachExercise.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ReportData.cs" />
     <Compile Include="ReportService.cs" />
     <Compile Include="ReportWindow.xaml.cs">
@@ -89,9 +98,17 @@
     <Compile Include="WelcomeWindow.xaml.cs">
       <DependentUpon>WelcomeWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="ExerciseChoice.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainReportWriter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandExercise.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -105,6 +122,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ReachExercise.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ReportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
