@@ -384,18 +384,19 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             Point handUser1 = new Point(depth1.X, depth1.Y);
             Point handUser2 = new Point(depth2.X, depth2.Y);
 
-            /*
+            
+               /*
                Equation for points x,y that fall within a circle: (x - center_x)^2 + (y - center_y)^2 < radius^2.
                Here, points x,y are set to user1 (the patient). The centers are taken from the hand of user2 (conductor)
                The radius is predefined via a constant
-            */
+               */
+            
             if ( ( Math.Pow( (handUser1.X - handUser2.X), 2) + Math.Pow( (handUser1.Y - handUser2.Y), 2) ) < Math.Pow(cirRadius,2) )
             {
                 MessageBox.Show("Patient Reached Hand");
             }
 
         }
-
 
         /// <summary>
         /// Execute start up tasks
@@ -464,30 +465,29 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     // Draw a transparent background to set the render size
                     dc.DrawRectangle(Brushes.Black, null, new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
 
+                    //updates skeleton tracking if anyone leaves
+                    if (userBody1 != null)
+                    {
+                        if (!userBody1.IsTracked)
+                        {
+                            userBody1 = null;
+                            UserKinectTrackingID1 = "User 1: not tracking";
+                        }
+                    }
+
+                    if (userBody2 != null)
+                    {
+                        if (!userBody2.IsTracked)
+                        {
+                            userBody2 = null;
+                            UserKinectTrackingID2 = "User 2: not tracking";
+                        }
+                    }
+
                     int penIndex = 0;
                     foreach (Body body in this.bodies)
                     {                    
                         Pen drawPen = this.bodyColors[penIndex++];
-
-                        //updates skeleton tracking if anyone leaves
-                        //TODO could move this out of foreach loop, probably still works
-                        if (userBody1 != null)
-                        {
-                            if (!userBody1.IsTracked)
-                            {
-                                userBody1 = null;
-                                UserKinectTrackingID1 = "User 1: not tracking";
-                            }
-                        }
-
-                        if (userBody2 != null)
-                        {
-                            if (!userBody2.IsTracked)
-                            {
-                                userBody2 = null;
-                                UserKinectTrackingID2 = "User 2: not tracking";
-                            }
-                        }
 
                         if (body.IsTracked)
                         {
@@ -505,43 +505,46 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                                 UserKinectTrackingID2 = "User Two Tracking ID: " + userBody2.TrackingId;
                             }
 
-                            this.DrawClippedEdges(body, dc);
-
-                            IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
-
-                            // convert the joint points to depth (display) space
-                            Dictionary<JointType, Point> jointPoints = new Dictionary<JointType, Point>();
-
-                            foreach (JointType jointType in joints.Keys)
+                            if (body == userBody1 || body == userBody2)
                             {
-                                // sometimes the depth(Z) of an inferred joint may show as negative
-                                // clamp down to 0.1f to prevent coordinatemapper from returning (-Infinity, -Infinity)
-                                CameraSpacePoint position = joints[jointType].Position;
-                                if (position.Z < 0)
+                                this.DrawClippedEdges(body, dc);
+
+                                IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
+
+                                // convert the joint points to depth (display) space
+                                Dictionary<JointType, Point> jointPoints = new Dictionary<JointType, Point>();
+
+                                foreach (JointType jointType in joints.Keys)
                                 {
-                                    position.Z = InferredZPositionClamp;
+                                    // sometimes the depth(Z) of an inferred joint may show as negative
+                                    // clamp down to 0.1f to prevent coordinatemapper from returning (-Infinity, -Infinity)
+                                    CameraSpacePoint position = joints[jointType].Position;
+                                    if (position.Z < 0)
+                                    {
+                                        position.Z = InferredZPositionClamp;
+                                    }
+
+                                    DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(position);
+                                    jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
                                 }
 
-                                DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(position);
-                                jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
-                            }
+                                this.DrawBody(joints, jointPoints, dc, drawPen);
 
-                            this.DrawBody(joints, jointPoints, dc, drawPen);
-
-                            this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
-                            this.DrawHand(body.HandRightState, jointPoints[JointType.HandRight], dc);
-
-                            //TODO could move this out of foreach loop, probably still works
-                            if (isEventStarted)
-                            {
-                                determineUserReach();
-                            }
-                            
+                                this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
+                                this.DrawHand(body.HandRightState, jointPoints[JointType.HandRight], dc);
+                            }  
                         }
                     }
-
+           
                     // prevent drawing outside of our render area
                     this.drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
+                }
+
+                //EVENT
+                if (isEventStarted)
+                {
+                    determineUserReach();
+                
                 }
             }
         }
