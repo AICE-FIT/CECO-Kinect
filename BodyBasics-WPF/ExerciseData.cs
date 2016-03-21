@@ -10,6 +10,14 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     {
         private string exerciseName;
         private int patientID;
+        private int employeeID;
+        private int sessionID;
+
+        //TODO specific to reach, will abstract later
+        private string hands;
+        private double angle;
+        private DateTime date;
+
         private double measurementA;
         private double measurementB;
         private double measurementC;
@@ -37,6 +45,34 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 if (value != patientID)
                 {
                     patientID = value;
+
+                }
+            }
+        }
+
+        public int EmployeeID
+        {
+            get { return employeeID; }
+
+            set
+            {
+                if (value != employeeID)
+                {
+                    employeeID = value;
+
+                }
+            }
+        }
+
+        public int SessionID
+        {
+            get { return sessionID; }
+
+            set
+            {
+                if (value != sessionID)
+                {
+                    sessionID = value;
 
                 }
             }
@@ -84,7 +120,48 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
+        //TODO specific to reach, will abstract later
+        public string Hands
+        {
+            get { return hands; }
 
+            set
+            {
+                if (value != hands)
+                {
+                    hands = value;
+
+                }
+            }
+        }
+
+        public double Angle
+        {
+            get { return angle; }
+
+            set
+            {
+                if (value != angle)
+                {
+                    angle = value;
+
+                }
+            }
+        }
+
+        public DateTime Date
+        {
+            get { return date; }
+
+            set
+            {
+                if (value != date)
+                {
+                    date = value;
+
+                }
+            }
+        }
 
 
     }

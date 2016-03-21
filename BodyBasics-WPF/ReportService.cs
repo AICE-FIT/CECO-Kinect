@@ -53,20 +53,31 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     }
                 }
 
-                cmd.CommandText = "SELECT * FROM exercise where patientID=@pID";
+                //TODO new reach specific, fix later
+                cmd.CommandText = "SELECT * FROM reach where patientID=@pID";
                 cmd.Prepare();
-                
+
                 using (MySqlDataReader rdr = cmd.ExecuteReader())
                 {
 
                     while (rdr.Read())
                     {
                         ExerciseData exerciseData = new ExerciseData();
-                        exerciseData.ExerciseName = rdr.GetString("exerciseName");
+                        exerciseData.ExerciseName = "reach";
                         exerciseData.PatientID = rdr.GetInt32("patientID");
+                        exerciseData.EmployeeID = rdr.GetInt32("employeeID");
+                        exerciseData.SessionID = rdr.GetInt32("sessionID");
+
+                        /*
                         exerciseData.MeasurementA = rdr.GetDouble("measurementA");
                         exerciseData.MeasurementB = rdr.GetDouble("measurementB");
                         exerciseData.MeasurementC = rdr.GetDouble("measurementC");
+                        */
+
+                        exerciseData.Hands = rdr.GetString("hands");
+                        exerciseData.Angle = rdr.GetDouble("angle");
+                        exerciseData.Date = rdr.GetDateTime("exerciseDate");
+
                         reportData.ExerciseDataList.Add(exerciseData);
                     }
                 }
@@ -75,6 +86,26 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
             return reportData;
 
+        }
+
+        public void writeReachData(int pid, int eid, int sid, string hands, double angle, DateTime date)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "INSERT INTO reach (patientID,employeeID,sessionID,hands,angle,exerciseDate) VALUES (@pid,@eid,@sid,@hands,@angle,@date)";
+                cmd.Parameters.AddWithValue("@pid", pid);
+                cmd.Parameters.AddWithValue("@eid", eid);
+                cmd.Parameters.AddWithValue("@sid", sid);
+                cmd.Parameters.AddWithValue("@hands", hands);
+                cmd.Parameters.AddWithValue("@angle", angle);
+                cmd.Parameters.AddWithValue("@date", date.ToString("yyyy/MM/dd"));
+                cmd.ExecuteNonQuery();
+
+            }
         }
     }
 }

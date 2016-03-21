@@ -130,7 +130,6 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// </summary>
         private string statusText = null;
 
-        //NEW CODE
         ///<summary>
         /// Body for Users
         /// Tracking id given by kinect once user is being tracked
@@ -154,6 +153,14 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// radius of circle used for reach detection
         /// </summary>
         private const double cirRadius = 45;
+
+        ///<summary>
+        /// DUMMY VARS FOR DUMMY INPUT DATA
+        /// </summary>
+        private const int sessionDummyID = 1;
+        private const int patientnDummyID = 1;
+        private const int employeeDummyID = 1;
+        private DateTime exerciseDate;
 
         /// <summary>
         /// Initializes a new instance of the ReachWindow class.
@@ -236,6 +243,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             //Tracking kinect set ids
             UserKinectTrackingID1 = "User 1: not tracking";
             UserKinectTrackingID2 = "User 2: not tracking";
+
+            //Set date
+            exerciseDate = DateTime.Today;
 
             // Create the drawing group we'll use for drawing
             this.drawingGroup = new DrawingGroup();
@@ -415,7 +425,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             and will be recorded when the exercise starts, the same time as the stopwatch, and then set back to null 
             upon the success. I think that should work. -HTC
             */
-            double angle;
+            double angle = -1;
             string hands = null;
             
                /*
@@ -470,6 +480,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             if (!isEventStarted)
             {
                 //write to database
+                //Remember to add time and distance next!
+                ReportService service = new ReportService();
+                service.writeReachData(patientnDummyID, employeeDummyID, sessionDummyID, hands, angle, exerciseDate);
             }
         }
 

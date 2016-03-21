@@ -12,16 +12,24 @@
             <StackPanel>
                 <TextBlock Text="{Binding Path=ExerciseName}" FontWeight="Bold" FontFamily="Consolas" FontSize="14.667" />
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Measurement A: "/>
-                    <TextBlock Text="{Binding Path=MeasurementA}"/>
+                    <TextBlock Text="Date: "/>
+                    <TextBlock Text="{Binding Path=Date}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Measurement B: "/>
-                    <TextBlock Text="{Binding Path=MeasurementB}"/>
+                    <TextBlock Text="Session ID: "/>
+                    <TextBlock Text="{Binding Path=SessionID}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Measurement C: "/>
-                    <TextBlock Text="{Binding Path=MeasurementC}" />
+                    <TextBlock Text="Employee ID: "/>
+                    <TextBlock Text="{Binding Path=EmployeeID}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Hands: "/>
+                    <TextBlock Text="{Binding Path=Hands}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Angle: "/>
+                    <TextBlock Text="{Binding Path=Angle}" />
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
