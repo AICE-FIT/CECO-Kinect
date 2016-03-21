@@ -428,10 +428,10 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             if ( ( Math.Pow( (lHandUser1.X - lHandUser2.X), 2) + Math.Pow( (lHandUser1.Y - lHandUser2.Y), 2) ) < Math.Pow(cirRadius,2) )
             {
                 isEventStarted = false;
-                MessageBox.Show("Patient Reached Hand - L->L");
-                angle = AngleBetweenVectors(userBody1.Joints[JointType.HipRight], userBody1.Joints[JointType.ShoulderLeft], userBody1.Joints[JointType.ElbowLeft]);
+                //MessageBox.Show("Patient Reached Hand - L->L");
+                angle = ReachAngle(userBody1.Joints[JointType.ElbowLeft]);
                 hands = "ll";
-
+                MessageBox.Show("L->L: Angle = " + angle);
                 buttonStartEvent.IsEnabled = true;
                 buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
 
@@ -439,7 +439,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             {
                 isEventStarted = false;
                 MessageBox.Show("Patient Reached Hand - L->R");
-                angle = AngleBetweenVectors(userBody1.Joints[JointType.HipRight], userBody1.Joints[JointType.ShoulderLeft], userBody1.Joints[JointType.ElbowLeft]);
+                angle = ReachAngle(userBody1.Joints[JointType.ElbowLeft]);
                 hands = "lr";
 
                 buttonStartEvent.IsEnabled = true;
@@ -449,7 +449,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             {
                 isEventStarted = false;
                 MessageBox.Show("Patient Reached Hand - R->L");
-                angle = AngleBetweenVectors(userBody1.Joints[JointType.HipLeft], userBody1.Joints[JointType.ShoulderRight], userBody1.Joints[JointType.ElbowRight]);
+                angle = ReachAngle(userBody1.Joints[JointType.ElbowRight]);
                 hands = "rl";
 
                 buttonStartEvent.IsEnabled = true;
@@ -459,7 +459,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             {
                 isEventStarted = false;
                 MessageBox.Show("Patient Reached Hand - R->R");
-                angle = AngleBetweenVectors(userBody1.Joints[JointType.HipLeft], userBody1.Joints[JointType.ShoulderRight], userBody1.Joints[JointType.ElbowRight]);
+                angle = ReachAngle(userBody1.Joints[JointType.ElbowRight]);
                 hands = "rr";
 
                 buttonStartEvent.IsEnabled = true;
@@ -473,14 +473,17 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
-        private double AngleBetweenVectors(Joint hip, Joint shoulder, Joint elbow)
+        private double ReachAngle(Joint elbow)
         {
             Double angle;
-            Vector3D hipVector = new Vector3D(hip.Position.X, hip.Position.Y, hip.Position.Z);
-            Vector3D shoulderVector = new Vector3D(shoulder.Position.X, shoulder.Position.Y, shoulder.Position.Z);
+            Joint spineShoulder = userBody1.Joints[JointType.SpineShoulder];
+            Joint spineMid = userBody1.Joints[JointType.SpineMid];
+
+            Vector3D spineMidVector = new Vector3D(spineMid.Position.X, spineMid.Position.Y, spineMid.Position.Z);
+            Vector3D spineShoulderVector = new Vector3D(spineShoulder.Position.X, spineShoulder.Position.Y, spineShoulder.Position.Z);
             Vector3D elbowVector = new Vector3D(elbow.Position.X, elbow.Position.Y, elbow.Position.Z);
 
-            angle = calculateAngles(hipVector - shoulderVector, hipVector - elbowVector);
+            angle = calculateAngles(spineMidVector - spineShoulderVector, spineMidVector - elbowVector);
 
             return angle;
         }
