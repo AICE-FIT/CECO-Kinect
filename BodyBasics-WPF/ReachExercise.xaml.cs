@@ -415,7 +415,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             and will be recorded when the exercise starts, the same time as the stopwatch, and then set back to null 
             upon the success. I think that should work. -HTC
             */
-            
+            double angle;
+            string hands = null;
             
                /*
                Equation for points x,y that fall within a circle: (x - center_x)^2 + (y - center_y)^2 < radius^2.
@@ -428,47 +429,58 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             {
                 isEventStarted = false;
                 MessageBox.Show("Patient Reached Hand - L->L");
+                angle = AngleBetweenVectors(userBody1.Joints[JointType.HipRight], userBody1.Joints[JointType.ShoulderLeft], userBody1.Joints[JointType.ElbowLeft]);
+                hands = "ll";
+
                 buttonStartEvent.IsEnabled = true;
                 buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
 
-            }
-
-            if ((Math.Pow((lHandUser1.X - rHandUser2.X), 2) + Math.Pow((lHandUser1.Y - rHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
+            } else if ((Math.Pow((lHandUser1.X - rHandUser2.X), 2) + Math.Pow((lHandUser1.Y - rHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
             {
                 isEventStarted = false;
                 MessageBox.Show("Patient Reached Hand - L->R");
+                angle = AngleBetweenVectors(userBody1.Joints[JointType.HipRight], userBody1.Joints[JointType.ShoulderLeft], userBody1.Joints[JointType.ElbowLeft]);
+                hands = "lr";
+
                 buttonStartEvent.IsEnabled = true;
                 buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
 
-            }
-
-            if ((Math.Pow((rHandUser1.X - lHandUser2.X), 2) + Math.Pow((rHandUser1.Y - lHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
+            } else if ((Math.Pow((rHandUser1.X - lHandUser2.X), 2) + Math.Pow((rHandUser1.Y - lHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
             {
                 isEventStarted = false;
                 MessageBox.Show("Patient Reached Hand - R->L");
+                angle = AngleBetweenVectors(userBody1.Joints[JointType.HipLeft], userBody1.Joints[JointType.ShoulderRight], userBody1.Joints[JointType.ElbowRight]);
+                hands = "rl";
+
                 buttonStartEvent.IsEnabled = true;
                 buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
 
-            }
-
-            if ((Math.Pow((rHandUser1.X - rHandUser2.X), 2) + Math.Pow((rHandUser1.Y - rHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
+            } else if ((Math.Pow((rHandUser1.X - rHandUser2.X), 2) + Math.Pow((rHandUser1.Y - rHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
             {
                 isEventStarted = false;
                 MessageBox.Show("Patient Reached Hand - R->R");
+                angle = AngleBetweenVectors(userBody1.Joints[JointType.HipLeft], userBody1.Joints[JointType.ShoulderRight], userBody1.Joints[JointType.ElbowRight]);
+                hands = "rr";
+
                 buttonStartEvent.IsEnabled = true;
                 buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
 
             }
+
+            if (!isEventStarted)
+            {
+                //write to database
+            }
         }
 
-        private double AngleBetweenVectors(Joint elbowRight, Joint shoulderRight, Joint wristRight)
+        private double AngleBetweenVectors(Joint hip, Joint shoulder, Joint elbow)
         {
             Double angle;
-            Vector3D elbowR = new Vector3D(elbowRight.Position.X, elbowRight.Position.Y, elbowRight.Position.Z);
-            Vector3D shoulderR = new Vector3D(shoulderRight.Position.X, shoulderRight.Position.Y, shoulderRight.Position.Z);
-            Vector3D wristR = new Vector3D(wristRight.Position.X, wristRight.Position.Y, wristRight.Position.Z);
+            Vector3D hipVector = new Vector3D(hip.Position.X, hip.Position.Y, hip.Position.Z);
+            Vector3D shoulderVector = new Vector3D(shoulder.Position.X, shoulder.Position.Y, shoulder.Position.Z);
+            Vector3D elbowVector = new Vector3D(elbow.Position.X, elbow.Position.Y, elbow.Position.Z);
 
-            angle = calculateAngles(elbowR - shoulderR, elbowR - wristR);
+            angle = calculateAngles(hipVector - shoulderVector, hipVector - elbowVector);
 
             return angle;
         }
