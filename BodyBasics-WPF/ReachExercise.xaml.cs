@@ -15,6 +15,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
+    using System.Windows.Media.Media3D;
     using System.Windows.Media.Imaging;
     using Microsoft.Kinect;
  
@@ -355,6 +356,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 buttonStartEvent.Visibility = System.Windows.Visibility.Collapsed;
           
                 isEventStarted = true;
+                //start stopwatch
+                //record childs hand positions
             }else if (userBody1 == null || userBody2 == null)
             {
                 MessageBox.Show("User(s) not being tracked");
@@ -369,42 +372,116 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private void determineUserReach()
         {
 
-            CameraSpacePoint handPositionUser1 = userBody1.Joints[JointType.HandLeft].Position;
-            CameraSpacePoint handPositionUser2 = userBody2.Joints[JointType.HandLeft].Position;
+            CameraSpacePoint lHandPositionUser1 = userBody1.Joints[JointType.HandLeft].Position;
+            CameraSpacePoint lHandPositionUser2 = userBody2.Joints[JointType.HandLeft].Position;
+            CameraSpacePoint rHandPositionUser1 = userBody1.Joints[JointType.HandRight].Position;
+            CameraSpacePoint rHandPositionUser2 = userBody2.Joints[JointType.HandRight].Position;
             
 
-            if (handPositionUser1.Z < 0)
+            if (lHandPositionUser1.Z < 0)
             {
-                handPositionUser1.Z = InferredZPositionClamp;
+                lHandPositionUser1.Z = InferredZPositionClamp;
             }
 
-            if (handPositionUser2.Z < 0)
+            if (lHandPositionUser2.Z < 0)
             {
-                handPositionUser2.Z = InferredZPositionClamp;
+                lHandPositionUser2.Z = InferredZPositionClamp;
             }
 
-            DepthSpacePoint depth1 = this.coordinateMapper.MapCameraPointToDepthSpace(handPositionUser1);
-            DepthSpacePoint depth2 = this.coordinateMapper.MapCameraPointToDepthSpace(handPositionUser2);
+            if (rHandPositionUser1.Z < 0)
+            {
+                rHandPositionUser1.Z = InferredZPositionClamp;
+            }
 
-            Point handUser1 = new Point(depth1.X, depth1.Y);
-            Point handUser2 = new Point(depth2.X, depth2.Y);
+            if (rHandPositionUser2.Z < 0)
+            {
+                rHandPositionUser2.Z = InferredZPositionClamp;
+            }
 
+            DepthSpacePoint lDepth1 = this.coordinateMapper.MapCameraPointToDepthSpace(lHandPositionUser1);
+            DepthSpacePoint lDepth2 = this.coordinateMapper.MapCameraPointToDepthSpace(lHandPositionUser2);
+            DepthSpacePoint rDepth1 = this.coordinateMapper.MapCameraPointToDepthSpace(rHandPositionUser1);
+            DepthSpacePoint rDepth2 = this.coordinateMapper.MapCameraPointToDepthSpace(rHandPositionUser2);
+
+            Point lHandUser1 = new Point(lDepth1.X, lDepth1.Y);
+            Point lHandUser2 = new Point(lDepth2.X, lDepth2.Y);
+            Point rHandUser1 = new Point(rDepth1.X, rDepth1.Y);
+            Point rHandUser2 = new Point(rDepth2.X, rDepth2.Y);
+
+            //Vars for data to be collected. Will be filled in when a success is met
+            /*
+            Time and distance values will have to be dealt with with something global I suppose? 
+            Maybe we can have a global variable for the starting positions of the child's hands that stats null
+            and will be recorded when the exercise starts, the same time as the stopwatch, and then set back to null 
+            upon the success. I think that should work. -HTC
+            */
+            
             
                /*
                Equation for points x,y that fall within a circle: (x - center_x)^2 + (y - center_y)^2 < radius^2.
                Here, points x,y are set to user1 (the patient). The centers are taken from the hand of user2 (conductor)
                The radius is predefined via a constant
                */
-            
-            if ( ( Math.Pow( (handUser1.X - handUser2.X), 2) + Math.Pow( (handUser1.Y - handUser2.Y), 2) ) < Math.Pow(cirRadius,2) )
+
+            //first step in if statements should be to stop the stopwatch!
+            if ( ( Math.Pow( (lHandUser1.X - lHandUser2.X), 2) + Math.Pow( (lHandUser1.Y - lHandUser2.Y), 2) ) < Math.Pow(cirRadius,2) )
             {
                 isEventStarted = false;
-                MessageBox.Show("Patient Reached Hand");
+                MessageBox.Show("Patient Reached Hand - L->L");
                 buttonStartEvent.IsEnabled = true;
                 buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
 
             }
 
+            if ((Math.Pow((lHandUser1.X - rHandUser2.X), 2) + Math.Pow((lHandUser1.Y - rHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
+            {
+                isEventStarted = false;
+                MessageBox.Show("Patient Reached Hand - L->R");
+                buttonStartEvent.IsEnabled = true;
+                buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
+
+            }
+
+            if ((Math.Pow((rHandUser1.X - lHandUser2.X), 2) + Math.Pow((rHandUser1.Y - lHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
+            {
+                isEventStarted = false;
+                MessageBox.Show("Patient Reached Hand - R->L");
+                buttonStartEvent.IsEnabled = true;
+                buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
+
+            }
+
+            if ((Math.Pow((rHandUser1.X - rHandUser2.X), 2) + Math.Pow((rHandUser1.Y - rHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
+            {
+                isEventStarted = false;
+                MessageBox.Show("Patient Reached Hand - R->R");
+                buttonStartEvent.IsEnabled = true;
+                buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
+
+            }
+        }
+
+        private double AngleBetweenVectors(Joint elbowRight, Joint shoulderRight, Joint wristRight)
+        {
+            Double angle;
+            Vector3D elbowR = new Vector3D(elbowRight.Position.X, elbowRight.Position.Y, elbowRight.Position.Z);
+            Vector3D shoulderR = new Vector3D(shoulderRight.Position.X, shoulderRight.Position.Y, shoulderRight.Position.Z);
+            Vector3D wristR = new Vector3D(wristRight.Position.X, wristRight.Position.Y, wristRight.Position.Z);
+
+            angle = calculateAngles(elbowR - shoulderR, elbowR - wristR);
+
+            return angle;
+        }
+
+        private double calculateAngles(Vector3D a, Vector3D b)
+        {
+
+            double dproduct = 0.0;
+            a.Normalize();
+            b.Normalize();
+
+            dproduct = Vector3D.DotProduct(a, b);
+            return (double)Math.Acos(dproduct) / Math.PI * 180;
         }
 
         /// <summary>

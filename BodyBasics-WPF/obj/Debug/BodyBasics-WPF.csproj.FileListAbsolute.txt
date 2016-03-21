@@ -57,3 +57,5 @@ D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\ReachExercise.baml
 D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\ExerciseChoice.g.cs
 D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\ReachExercise.g.cs
 D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\ExerciseChoice.baml
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\StandExercise.baml
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\StandExercise.g.cs
