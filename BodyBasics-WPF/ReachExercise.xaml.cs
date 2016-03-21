@@ -140,6 +140,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private string userKinectTrackingID2;
 
         ///<summary>
+        ///Start Event Button
+        ///</summary>>
+        Button buttonStartEvent = null;
+
+        ///<summary>
         /// event status
         /// </summary>
         private bool isEventStarted = false;
@@ -342,12 +347,12 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private void startReachExercise(object sender, RoutedEventArgs e)
         {
 
-            Button button = (Button)e.OriginalSource;
+            buttonStartEvent = (Button)e.OriginalSource;
 
             if (userBody1 != null && userBody2 != null)
             {
-                button.IsEnabled = false;
-                button.Visibility = System.Windows.Visibility.Collapsed;
+                buttonStartEvent.IsEnabled = false;
+                buttonStartEvent.Visibility = System.Windows.Visibility.Collapsed;
           
                 isEventStarted = true;
             }else if (userBody1 == null || userBody2 == null)
@@ -393,7 +398,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             
             if ( ( Math.Pow( (handUser1.X - handUser2.X), 2) + Math.Pow( (handUser1.Y - handUser2.Y), 2) ) < Math.Pow(cirRadius,2) )
             {
+                isEventStarted = false;
                 MessageBox.Show("Patient Reached Hand");
+                buttonStartEvent.IsEnabled = true;
+                buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
+
             }
 
         }
@@ -543,7 +552,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 //EVENT
                 if (isEventStarted)
                 {
-                    determineUserReach();
+                    if (userBody1.IsTracked && userBody2.IsTracked)
+                    {
+                        determineUserReach();
+                    }
+                    
                 
                 }
             }
