@@ -31,6 +31,10 @@
                     <TextBlock Text="Angle: "/>
                     <TextBlock Text="{Binding Path=Angle}" />
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Time: "/>
+                    <TextBlock Text="{Binding Path=Time}"/>
+                </StackPanel>
             </StackPanel>
         </DataTemplate>
         <Style  TargetType="{x:Type ListBoxItem}">

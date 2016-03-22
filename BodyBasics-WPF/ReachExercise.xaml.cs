@@ -142,8 +142,13 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         ///<summary>
         ///Start Event Button
         ///</summary>>
-        Button buttonStartEvent = null;
+        private Button buttonStartEvent = null;
 
+        ///<summary>
+        ///Stopwatch timer for event
+        ///</summary>
+        private Stopwatch stopWatch;
+        
         ///<summary>
         /// event status
         /// </summary>
@@ -246,6 +251,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
             //Set date
             exerciseDate = DateTime.Today;
+
+            //Set timer
+            stopWatch = new Stopwatch();
 
             // Create the drawing group we'll use for drawing
             this.drawingGroup = new DrawingGroup();
@@ -366,7 +374,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 buttonStartEvent.Visibility = System.Windows.Visibility.Collapsed;
           
                 isEventStarted = true;
-                //start stopwatch
+                stopWatch.Start();
+
                 //record childs hand positions
             }else if (userBody1 == null || userBody2 == null)
             {
@@ -427,6 +436,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             */
             double angle = -1;
             string hands = null;
+            double time = -1;
             
                /*
                Equation for points x,y that fall within a circle: (x - center_x)^2 + (y - center_y)^2 < radius^2.
@@ -437,41 +447,53 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             //first step in if statements should be to stop the stopwatch!
             if ( ( Math.Pow( (lHandUser1.X - lHandUser2.X), 2) + Math.Pow( (lHandUser1.Y - lHandUser2.Y), 2) ) < Math.Pow(cirRadius,2) )
             {
+                stopWatch.Stop();
                 isEventStarted = false;
-                //MessageBox.Show("Patient Reached Hand - L->L");
                 angle = ReachAngle(userBody1.Joints[JointType.ElbowLeft]);
                 hands = "ll";
-                MessageBox.Show("L->L: Angle = " + angle);
+                time = stopWatch.Elapsed.TotalSeconds;
+                stopWatch.Reset();
+
+                MessageBox.Show("Patient Reached Hand - L->L");
                 buttonStartEvent.IsEnabled = true;
                 buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
 
             } else if ((Math.Pow((lHandUser1.X - rHandUser2.X), 2) + Math.Pow((lHandUser1.Y - rHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
             {
+                stopWatch.Stop();
                 isEventStarted = false;
-                MessageBox.Show("Patient Reached Hand - L->R");
                 angle = ReachAngle(userBody1.Joints[JointType.ElbowLeft]);
                 hands = "lr";
+                time = stopWatch.Elapsed.TotalSeconds;
+                stopWatch.Reset();
 
+                MessageBox.Show("Patient Reached Hand - L->R");
                 buttonStartEvent.IsEnabled = true;
                 buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
 
             } else if ((Math.Pow((rHandUser1.X - lHandUser2.X), 2) + Math.Pow((rHandUser1.Y - lHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
             {
+                stopWatch.Stop();
                 isEventStarted = false;
-                MessageBox.Show("Patient Reached Hand - R->L");
                 angle = ReachAngle(userBody1.Joints[JointType.ElbowRight]);
                 hands = "rl";
+                time = stopWatch.Elapsed.TotalSeconds;
+                stopWatch.Reset();
 
+                MessageBox.Show("Patient Reached Hand - R->L");
                 buttonStartEvent.IsEnabled = true;
                 buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
 
             } else if ((Math.Pow((rHandUser1.X - rHandUser2.X), 2) + Math.Pow((rHandUser1.Y - rHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
             {
+                stopWatch.Stop();
                 isEventStarted = false;
-                MessageBox.Show("Patient Reached Hand - R->R");
                 angle = ReachAngle(userBody1.Joints[JointType.ElbowRight]);
                 hands = "rr";
+                time = stopWatch.Elapsed.TotalSeconds;
+                stopWatch.Reset();
 
+                MessageBox.Show("Patient Reached Hand - R->R");
                 buttonStartEvent.IsEnabled = true;
                 buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
 
@@ -479,10 +501,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
             if (!isEventStarted)
             {
-                //write to database
+                //convert stopwatch data, write data to database
                 //Remember to add time and distance next!
                 ReportService service = new ReportService();
-                service.writeReachData(patientnDummyID, employeeDummyID, sessionDummyID, hands, angle, exerciseDate);
+                service.writeReachData(patientnDummyID, employeeDummyID, sessionDummyID, hands, angle, exerciseDate, time);
+                
             }
         }
 

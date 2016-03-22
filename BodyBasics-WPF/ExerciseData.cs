@@ -17,6 +17,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private string hands;
         private double angle;
         private DateTime date;
+        private double time;
 
         private double measurementA;
         private double measurementB;
@@ -158,6 +159,21 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 if (value != date)
                 {
                     date = value;
+
+                }
+            }
+        }
+
+        public double Time
+        {
+
+            get { return time; }
+
+            set
+            {
+                if (value != time)
+                {
+                    time = value;
 
                 }
             }

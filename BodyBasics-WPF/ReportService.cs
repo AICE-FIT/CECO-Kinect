@@ -68,15 +68,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         exerciseData.EmployeeID = rdr.GetInt32("employeeID");
                         exerciseData.SessionID = rdr.GetInt32("sessionID");
 
-                        /*
-                        exerciseData.MeasurementA = rdr.GetDouble("measurementA");
-                        exerciseData.MeasurementB = rdr.GetDouble("measurementB");
-                        exerciseData.MeasurementC = rdr.GetDouble("measurementC");
-                        */
-
+                        //specific to reach
                         exerciseData.Hands = rdr.GetString("hands");
                         exerciseData.Angle = rdr.GetDouble("angle");
                         exerciseData.Date = rdr.GetDateTime("exerciseDate");
+                        exerciseData.Time = rdr.GetDouble("time");
 
                         reportData.ExerciseDataList.Add(exerciseData);
                     }
@@ -88,7 +84,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
         }
 
-        public void writeReachData(int pid, int eid, int sid, string hands, double angle, DateTime date)
+        public void writeReachData(int pid, int eid, int sid, string hands, double angle, DateTime date, double time)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -96,13 +92,14 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = "INSERT INTO reach (patientID,employeeID,sessionID,hands,angle,exerciseDate) VALUES (@pid,@eid,@sid,@hands,@angle,@date)";
+                cmd.CommandText = "INSERT INTO reach (patientID,employeeID,sessionID,hands,angle,exerciseDate,time) VALUES (@pid,@eid,@sid,@hands,@angle,@date,@time)";
                 cmd.Parameters.AddWithValue("@pid", pid);
                 cmd.Parameters.AddWithValue("@eid", eid);
                 cmd.Parameters.AddWithValue("@sid", sid);
                 cmd.Parameters.AddWithValue("@hands", hands);
                 cmd.Parameters.AddWithValue("@angle", angle);
                 cmd.Parameters.AddWithValue("@date", date.ToString("yyyy/MM/dd"));
+                cmd.Parameters.AddWithValue("@time", time);
                 cmd.ExecuteNonQuery();
 
             }
