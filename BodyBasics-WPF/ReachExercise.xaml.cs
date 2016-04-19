@@ -162,9 +162,10 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         ///<summary>
         /// DUMMY VARS FOR DUMMY INPUT DATA
         /// </summary>
-        private const int sessionDummyID = 1;
-        private const int patientnDummyID = 1;
-        private const int employeeDummyID = 1;
+        // change test to trial. Trial is the term that CECO uses in place of test ("Descrete Trial")
+        private const int sessionDummyID = 5;
+        private const int patientnDummyID = 5;
+        private const int employeeDummyID = 5;
         private DateTime exerciseDate;
 
         /// <summary>
@@ -373,7 +374,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 buttonStartEvent.IsEnabled = false;
                 buttonStartEvent.Visibility = System.Windows.Visibility.Collapsed;
           
-                isEventStarted = true;
+                //isEventStarted = true;
                 stopWatch.Start();
 
                 //record childs hand positions
@@ -385,6 +386,29 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
         }
 
+        /// <summary>
+        /// Starts Reach Exercise
+        /// </summary>
+        private void startReachExerciseGesture()
+        {
+
+            if (userBody1 != null && userBody2 != null)
+            {
+                this.Start_Reach.IsEnabled = false;
+                this.Start_Reach.Visibility = System.Windows.Visibility.Collapsed;
+
+                isEventStarted = true;
+                stopWatch.Start();
+
+                //record childs hand positions
+            }
+            else if (userBody1 == null || userBody2 == null)
+            {
+                MessageBox.Show("User(s) not being tracked");
+            }
+
+
+        }
         /// <summary>
         /// Logic for the exercise. Check if user1 has reached user2
         /// </summary>
@@ -454,9 +478,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 time = stopWatch.Elapsed.TotalSeconds;
                 stopWatch.Reset();
 
-                MessageBox.Show("Patient Reached Hand - L->L");
-                buttonStartEvent.IsEnabled = true;
-                buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
+                //MessageBox.Show("Patient Reached Hand - L->L");
+                this.Start_Reach.IsEnabled = true;
+                this.Start_Reach.Visibility = System.Windows.Visibility.Visible;
 
             } else if ((Math.Pow((lHandUser1.X - rHandUser2.X), 2) + Math.Pow((lHandUser1.Y - rHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
             {
@@ -467,9 +491,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 time = stopWatch.Elapsed.TotalSeconds;
                 stopWatch.Reset();
 
-                MessageBox.Show("Patient Reached Hand - L->R");
-                buttonStartEvent.IsEnabled = true;
-                buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
+              //  MessageBox.Show("Patient Reached Hand - L->R");
+                this.Start_Reach.IsEnabled = true;
+                this.Start_Reach.Visibility = System.Windows.Visibility.Visible;
 
             } else if ((Math.Pow((rHandUser1.X - lHandUser2.X), 2) + Math.Pow((rHandUser1.Y - lHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
             {
@@ -480,9 +504,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 time = stopWatch.Elapsed.TotalSeconds;
                 stopWatch.Reset();
 
-                MessageBox.Show("Patient Reached Hand - R->L");
-                buttonStartEvent.IsEnabled = true;
-                buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
+               // MessageBox.Show("Patient Reached Hand - R->L");
+                this.Start_Reach.IsEnabled = true;
+                this.Start_Reach.Visibility = System.Windows.Visibility.Visible;
 
             } else if ((Math.Pow((rHandUser1.X - rHandUser2.X), 2) + Math.Pow((rHandUser1.Y - rHandUser2.Y), 2)) < Math.Pow(cirRadius, 2))
             {
@@ -493,9 +517,10 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 time = stopWatch.Elapsed.TotalSeconds;
                 stopWatch.Reset();
 
-                MessageBox.Show("Patient Reached Hand - R->R");
-                buttonStartEvent.IsEnabled = true;
-                buttonStartEvent.Visibility = System.Windows.Visibility.Visible;
+            //    MessageBox.Show("Patient Reached Hand - R->R");
+                this.Start_Reach.IsEnabled = true;
+                this.Start_Reach.Visibility = System.Windows.Visibility.Visible;
+
 
             }
 
@@ -676,10 +701,20 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     // prevent drawing outside of our render area
                     this.drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
                 }
-
+                if (userBody2 != null)
+                {
+                    if (userBody2.IsTracked)
+                    {
+                        if (userBody2.HandLeftState == HandState.Lasso || userBody2.HandRightState == HandState.Lasso)
+                        {
+                            startReachExerciseGesture();
+                        }
+                    }
+                }
                 //EVENT
                 if (isEventStarted)
                 {
+                    //this crashes when one of thw two bodies is not tracked. Shouldn't it not crash and just not check for the success? -HTC
                     if (userBody1.IsTracked && userBody2.IsTracked)
                     {
                         determineUserReach();
