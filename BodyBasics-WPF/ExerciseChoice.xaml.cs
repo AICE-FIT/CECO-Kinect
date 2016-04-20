@@ -19,15 +19,18 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     /// </summary>
     public partial class ExerciseChoice : Window
     {
-        public ExerciseChoice()
+        int id;
+
+        public ExerciseChoice(int id)
         {
             InitializeComponent();
+            this.id = id;
         }
 
         public void GoToReach(object sender, RoutedEventArgs e)
         {
             
-            ReachExercise re = new ReachExercise();
+            ReachExercise re = new ReachExercise(this.id);
             re.Show();
         }
 

@@ -165,13 +165,13 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         // change test to trial. Trial is the term that CECO uses in place of test ("Descrete Trial")
         private const int sessionDummyID = 5;
         private const int patientnDummyID = 5;
-        private const int employeeDummyID = 5;
+        private int employeeDummyID;
         private DateTime exerciseDate;
 
         /// <summary>
         /// Initializes a new instance of the ReachWindow class.
         /// </summary>
-        public ReachExercise()
+        public ReachExercise(int currentUserID)
         {
             // one sensor is currently supported
             this.kinectSensor = KinectSensor.GetDefault();
@@ -245,6 +245,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             // set the status text
             this.StatusText = this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
                                                             : Properties.Resources.NoSensorStatusText;
+
+            //employee id
+            employeeDummyID = currentUserID;
 
             //Tracking kinect set ids
             UserKinectTrackingID1 = "User 1: not tracking";
