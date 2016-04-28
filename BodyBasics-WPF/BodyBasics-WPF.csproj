@@ -49,6 +49,10 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevOne.Security.Cryptography.BCrypt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\BCrypt.1.0.0.0\lib\DevOne.Security.Cryptography.BCrypt.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Kinect">
       <HintPath>$(KINECTSDK20_DIR)Assemblies\Microsoft.Kinect.dll</HintPath>
     </Reference>
@@ -80,6 +84,9 @@
       <DependentUpon>ExerciseChoice.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExerciseData.cs" />
+    <Compile Include="Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainReportWriter.xaml.cs">
       <DependentUpon>MainReportWriter.xaml</DependentUpon>
     </Compile>
@@ -99,6 +106,10 @@
       <DependentUpon>WelcomeWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="ExerciseChoice.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Login.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

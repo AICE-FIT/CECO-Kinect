@@ -59,3 +59,6 @@ D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\ReachExercise.g.cs
 D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\ExerciseChoice.baml
 D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\StandExercise.baml
 D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\StandExercise.g.cs
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\Login.g.cs
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\bin\AnyCPU\Debug\DevOne.Security.Cryptography.BCrypt.dll
+D:\Harrison Cord\Documents\AICE\BodyBasics-WPF\obj\Debug\Login.baml

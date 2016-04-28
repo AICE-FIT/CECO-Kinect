@@ -163,8 +163,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// DUMMY VARS FOR DUMMY INPUT DATA
         /// </summary>
         // change test to trial. Trial is the term that CECO uses in place of test ("Descrete Trial")
-        private const int sessionDummyID = 5;
-        private const int patientnDummyID = 5;
+        private const int sessionDummyID = 6;
+        private const int patientnDummyID = 9;
         private int employeeDummyID;
         private DateTime exerciseDate;
 
@@ -527,13 +527,13 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
             }
 
-            if (!isEventStarted)
+            //only record if time doesn't equal 0, this removes most outlying entries such as holding the start gesture and touching their hand at the same time
+            if (!isEventStarted  && (time > 0))
             {
                 //convert stopwatch data, write data to database
                 //Remember to add time and distance next!
                 ReportService service = new ReportService();
                 service.writeReachData(patientnDummyID, employeeDummyID, sessionDummyID, hands, angle, exerciseDate, time);
-                
             }
         }
 
@@ -547,7 +547,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             Vector3D spineShoulderVector = new Vector3D(spineShoulder.Position.X, spineShoulder.Position.Y, spineShoulder.Position.Z);
             Vector3D elbowVector = new Vector3D(elbow.Position.X, elbow.Position.Y, elbow.Position.Z);
 
-            angle = calculateAngles(spineMidVector - spineShoulderVector, spineMidVector - elbowVector);
+            angle = calculateAngles(spineShoulderVector - spineMidVector, spineShoulderVector - elbowVector);
 
             return angle;
         }
